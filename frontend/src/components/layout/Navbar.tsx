@@ -5,6 +5,7 @@ import { navigation, site } from "@/config/site";
 import { routes } from "@/config/routes";
 import { cn } from "@/lib/utils";
 import { useSmartNavbar } from "@/hooks/use-smart-navbar";
+import { useNavbarBackground } from "@/hooks/use-navbar-background";
 
 function isActivePath(pathname: string, href: string) {
   if (href === routes.home) return pathname === routes.home;
@@ -15,6 +16,8 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const isVisible = useSmartNavbar(open);
+  const surface = useNavbarBackground();
+  const onDark = surface === "dark";
 
   useEffect(() => {
     setOpen(false);
@@ -33,20 +36,26 @@ export function Navbar() {
 
   return (
     <header
+      data-navbar-zone
       className={cn(
-        "fixed inset-x-0 top-0 z-50 px-3 pt-3 transition-transform duration-300 ease-out will-change-transform sm:px-4 sm:pt-4",
+        "pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 transition-transform duration-100 ease-out will-change-transform sm:px-4 sm:pt-4",
         isVisible ? "translate-y-0" : "-translate-y-[calc(100%+0.75rem)]",
-        !isVisible && "pointer-events-none",
       )}
       aria-hidden={!isVisible}
     >
       <nav
         aria-label="Main"
-        className="relative mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 rounded-lg border border-charcoal/10 bg-cream/95 px-4 shadow-[0_1px_3px_rgba(31,31,31,0.08)] backdrop-blur-md sm:h-[3.75rem] sm:px-5"
+        className={cn(
+          "pointer-events-none relative mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 rounded-lg border bg-transparent px-4 transition-colors duration-[10ms] sm:h-[3.75rem] sm:px-5",
+          onDark ? "border-white/35" : "border-charcoal/20",
+        )}
       >
         <Link
           to={routes.home}
-          className="shrink-0 font-serif text-lg font-semibold tracking-tight text-charcoal sm:text-xl"
+          className={cn(
+            "pointer-events-auto shrink-0 font-serif text-lg font-semibold tracking-tight transition-colors duration-[10ms] sm:text-xl",
+            onDark ? "text-warm-white" : "text-charcoal",
+          )}
           tabIndex={isVisible ? undefined : -1}
         >
           {site.name}
@@ -61,10 +70,14 @@ export function Navbar() {
                 to={item.href}
                 tabIndex={isVisible ? undefined : -1}
                 className={cn(
-                  "rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                  active
-                    ? "bg-charcoal/5 text-charcoal"
-                    : "text-charcoal/75 hover:bg-charcoal/[0.04] hover:text-charcoal",
+                  "pointer-events-auto rounded-md px-3 py-2 text-sm font-medium transition-colors duration-[10ms]",
+                  onDark
+                    ? active
+                      ? "bg-white/12 text-warm-white"
+                      : "text-warm-white/85 hover:bg-white/8 hover:text-warm-white"
+                    : active
+                      ? "bg-charcoal/6 text-charcoal"
+                      : "text-charcoal/75 hover:bg-charcoal/[0.04] hover:text-charcoal",
                 )}
                 aria-current={active ? "page" : undefined}
               >
@@ -75,7 +88,7 @@ export function Navbar() {
           <Link
             to={routes.contact}
             tabIndex={isVisible ? undefined : -1}
-            className="ml-1 rounded-md bg-gold px-4 py-2 text-sm font-semibold text-charcoal transition-colors hover:bg-gold/90"
+            className="pointer-events-auto ml-1 rounded-md bg-gold px-4 py-2 text-sm font-semibold text-charcoal transition-colors hover:bg-gold/90"
           >
             Book Now
           </Link>
@@ -83,7 +96,12 @@ export function Navbar() {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md text-charcoal transition-colors hover:bg-charcoal/5 md:hidden"
+          className={cn(
+            "pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-md transition-colors duration-[10ms] md:hidden",
+            onDark
+              ? "text-warm-white hover:bg-white/10"
+              : "text-charcoal hover:bg-charcoal/5",
+          )}
           onClick={() => setOpen(!open)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
@@ -96,11 +114,18 @@ export function Navbar() {
           <>
             <button
               type="button"
-              className="fixed inset-0 z-40 bg-charcoal/20 backdrop-blur-[2px] md:hidden"
+              className="pointer-events-auto fixed inset-0 z-40 bg-charcoal/25 backdrop-blur-[1px] md:hidden"
               aria-label="Close menu"
               onClick={() => setOpen(false)}
             />
-            <div className="absolute inset-x-0 top-[calc(100%+0.5rem)] z-50 rounded-lg border border-charcoal/10 bg-cream p-2 shadow-lg md:hidden">
+            <div
+              className={cn(
+                "pointer-events-auto absolute inset-x-0 top-[calc(100%+0.5rem)] z-50 rounded-lg border p-2 shadow-lg md:hidden",
+                onDark
+                  ? "border-white/30 bg-charcoal/95"
+                  : "border-charcoal/15 bg-cream/98",
+              )}
+            >
               {navigation.map((item) => {
                 const active = isActivePath(location.pathname, item.href);
                 return (
@@ -110,9 +135,13 @@ export function Navbar() {
                     onClick={() => setOpen(false)}
                     className={cn(
                       "block rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
-                      active
-                        ? "bg-charcoal/5 text-charcoal"
-                        : "text-charcoal/80 hover:bg-charcoal/[0.04]",
+                      onDark
+                        ? active
+                          ? "bg-white/12 text-warm-white"
+                          : "text-warm-white/90 hover:bg-white/8"
+                        : active
+                          ? "bg-charcoal/6 text-charcoal"
+                          : "text-charcoal/80 hover:bg-charcoal/[0.04]",
                     )}
                     aria-current={active ? "page" : undefined}
                   >

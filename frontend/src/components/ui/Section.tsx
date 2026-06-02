@@ -19,6 +19,7 @@ export function Section({
   return (
     <section
       id={id}
+      data-nav-background="light"
       className={cn(
         "py-16 sm:py-20 md:py-28 [content-visibility:auto] [contain-intrinsic-size:auto_500px]",
         variant === "gold" && "bg-gold",

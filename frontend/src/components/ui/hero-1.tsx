@@ -119,6 +119,7 @@ export function HeroLanding(props: HeroLandingProps) {
 
   return (
     <div
+      data-nav-background="dark"
       className={cn(
         "relative w-full overflow-hidden bg-charcoal",
         compact ? "min-h-[42vh] sm:min-h-[44vh]" : "min-h-[85vh] sm:min-h-screen",

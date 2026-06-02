@@ -4,7 +4,10 @@ import { navigation, site } from "@/config/site";
 
 export function Footer() {
   return (
-    <footer className="border-t border-gray-soft bg-charcoal text-warm-white">
+    <footer
+      data-nav-background="dark"
+      className="border-t border-gray-soft bg-charcoal text-warm-white"
+    >
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div className="grid gap-10 sm:grid-cols-2 sm:gap-12 md:grid-cols-3">
           <div>
