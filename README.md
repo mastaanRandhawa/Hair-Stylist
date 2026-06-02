@@ -54,6 +54,16 @@ Open [http://localhost:5173](http://localhost:5173).
 
 Deploys automatically on push to `main` via GitHub Actions (builds `frontend/` → `frontend/dist`).
 
+### One-time GitHub Pages setup (fixes deploy 404)
+
+If `deploy-pages` fails with **"Failed to create deployment (status: 404)"**, Pages is not enabled for Actions yet:
+
+1. Open [Repository → Settings → Pages](https://github.com/mastaanRandhawa/Hair-Stylist/settings/pages).
+2. Under **Build and deployment**, set **Source** to **GitHub Actions** (not “Deploy from a branch”).
+3. Go to **Actions** → **Deploy to GitHub Pages** → **Re-run all jobs**.
+
+If prompted, approve the **`github-pages`** environment for the deploy job. Public repos on github.com are required for free Pages on personal accounts.
+
 ## Build
 
 ```bash
