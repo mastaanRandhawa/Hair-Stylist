@@ -21,6 +21,12 @@ npm run dev
 
 Open [http://localhost:5173](http://localhost:5173).
 
+## Live site (GitHub Pages)
+
+**https://mastaanrandhawa.github.io/Hair-Stylist/**
+
+Deploys automatically on push to `main` via GitHub Actions.
+
 ## Build
 
 ```bash
