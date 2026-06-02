@@ -5,8 +5,8 @@ import { navigation, site } from "@/config/site";
 export function Footer() {
   return (
     <footer className="border-t border-gray-soft bg-charcoal text-warm-white">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-3">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <div className="grid gap-10 sm:grid-cols-2 sm:gap-12 md:grid-cols-3">
           <div>
             <p className="font-serif text-2xl font-medium">{site.name}</p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-warm-white/70">

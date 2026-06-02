@@ -25,7 +25,7 @@ Hair-Stylist/
 - **React 19** + **TypeScript** + **Vite**
 - **Tailwind CSS v4** — cream, gold (`#feed81`), charcoal palette
 - **21st.dev Hero** — `frontend/src/components/ui/hero-1.tsx`
-- **Cream editorial navbar** — inner pages (home uses hero nav)
+- **Unified smart navbar** — same bar on all pages; hides on scroll down, shows on scroll up
 - **Dynamic wave canvas** — hero background
 - **React Router** — multi-page routing with GitHub Pages `basename`
 

@@ -10,10 +10,9 @@ export function AboutPage() {
   return (
     <>
       <HeroSection
+        page="about"
         title="Our Story"
         description="An intimate studio devoted to editorial hair artistry since 2010."
-        compact
-        hideHeader
       />
       <Section>
         <MotionSection>

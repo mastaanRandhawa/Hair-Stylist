@@ -21,10 +21,9 @@ export function ServicesPage() {
   return (
     <>
       <HeroSection
+        page="services"
         title="Our Services"
         description="Precision cuts, luminous color, and restorative treatments."
-        compact
-        hideHeader
       />
 
       <Section>

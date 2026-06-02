@@ -10,10 +10,9 @@ export function GalleryPage() {
   return (
     <>
       <HeroSection
+        page="gallery"
         title="Portfolio"
         description="A curated collection of cuts, color, and editorial styling."
-        compact
-        hideHeader
       />
 
       <Section>

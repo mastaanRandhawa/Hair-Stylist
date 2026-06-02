@@ -6,10 +6,14 @@ import { routes } from "@/config/routes";
 import { cn } from "@/lib/utils";
 import { useSmartNavbar } from "@/hooks/use-smart-navbar";
 
+function isActivePath(pathname: string, href: string) {
+  if (href === routes.home) return pathname === routes.home;
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
-  const isHome = location.pathname === routes.home;
   const isVisible = useSmartNavbar(open);
 
   useEffect(() => {
@@ -20,85 +24,111 @@ export function Navbar() {
     if (!isVisible && open) setOpen(false);
   }, [isVisible, open]);
 
-  if (isHome) return null;
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 px-4 pt-4 transition-transform duration-300 ease-out will-change-transform sm:px-6",
-        isVisible ? "translate-y-0" : "-translate-y-[calc(100%+1rem)]",
+        "fixed inset-x-0 top-0 z-50 px-3 pt-3 transition-transform duration-300 ease-out will-change-transform sm:px-4 sm:pt-4",
+        isVisible ? "translate-y-0" : "-translate-y-[calc(100%+0.75rem)]",
         !isVisible && "pointer-events-none",
       )}
       aria-hidden={!isVisible}
     >
       <nav
         aria-label="Main"
-        className="relative mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-gray-soft/60 bg-cream/90 px-5 py-3 shadow-sm backdrop-blur-md"
+        className="relative mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 rounded-lg border border-charcoal/10 bg-cream/95 px-4 shadow-[0_1px_3px_rgba(31,31,31,0.08)] backdrop-blur-md sm:h-[3.75rem] sm:px-5"
       >
         <Link
           to={routes.home}
-          className="font-serif text-xl font-semibold tracking-wide text-charcoal"
+          className="shrink-0 font-serif text-lg font-semibold tracking-tight text-charcoal sm:text-xl"
           tabIndex={isVisible ? undefined : -1}
         >
           {site.name}
         </Link>
 
-        <button
-          type="button"
-          className="lg:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          tabIndex={isVisible ? undefined : -1}
-        >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
-
-        <div className="hidden items-center gap-8 lg:flex">
-          {navigation.map((item) => (
-            <Link
-              key={item.href}
-              to={item.href}
-              tabIndex={isVisible ? undefined : -1}
-              className={cn(
-                "text-sm font-medium transition-colors hover:text-charcoal/70",
-                location.pathname === item.href
-                  ? "text-charcoal"
-                  : "text-charcoal/80",
-              )}
-            >
-              {item.name}
-            </Link>
-          ))}
+        <div className="hidden items-center gap-1 md:flex md:gap-2 lg:gap-3">
+          {navigation.map((item) => {
+            const active = isActivePath(location.pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                to={item.href}
+                tabIndex={isVisible ? undefined : -1}
+                className={cn(
+                  "rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  active
+                    ? "bg-charcoal/5 text-charcoal"
+                    : "text-charcoal/75 hover:bg-charcoal/[0.04] hover:text-charcoal",
+                )}
+                aria-current={active ? "page" : undefined}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
           <Link
             to={routes.contact}
             tabIndex={isVisible ? undefined : -1}
-            className="rounded-full bg-gold px-5 py-2 text-sm font-semibold text-charcoal transition-all hover:scale-[1.02]"
+            className="ml-1 rounded-md bg-gold px-4 py-2 text-sm font-semibold text-charcoal transition-colors hover:bg-gold/90"
           >
             Book Now
           </Link>
         </div>
 
+        <button
+          type="button"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-md text-charcoal transition-colors hover:bg-charcoal/5 md:hidden"
+          onClick={() => setOpen(!open)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          tabIndex={isVisible ? undefined : -1}
+        >
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+
         {open && (
-          <div className="absolute inset-x-4 top-full z-50 mt-2 rounded-2xl border border-gray-soft bg-warm-white p-4 shadow-lg lg:hidden">
-            {navigation.map((item) => (
-              <Link
-                key={item.href}
-                to={item.href}
-                onClick={() => setOpen(false)}
-                className="block rounded-lg px-3 py-2.5 font-medium text-charcoal hover:bg-beige"
-              >
-                {item.name}
-              </Link>
-            ))}
-            <Link
-              to={routes.contact}
+          <>
+            <button
+              type="button"
+              className="fixed inset-0 z-40 bg-charcoal/20 backdrop-blur-[2px] md:hidden"
+              aria-label="Close menu"
               onClick={() => setOpen(false)}
-              className="mt-2 block rounded-full bg-gold px-4 py-3 text-center font-semibold text-charcoal"
-            >
-              Book Now
-            </Link>
-          </div>
+            />
+            <div className="absolute inset-x-0 top-[calc(100%+0.5rem)] z-50 rounded-lg border border-charcoal/10 bg-cream p-2 shadow-lg md:hidden">
+              {navigation.map((item) => {
+                const active = isActivePath(location.pathname, item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "block rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                      active
+                        ? "bg-charcoal/5 text-charcoal"
+                        : "text-charcoal/80 hover:bg-charcoal/[0.04]",
+                    )}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
+              <Link
+                to={routes.contact}
+                onClick={() => setOpen(false)}
+                className="mt-1 block rounded-md bg-gold px-3 py-2.5 text-center text-sm font-semibold text-charcoal"
+              >
+                Book Now
+              </Link>
+            </div>
+          </>
         )}
       </nav>
     </header>

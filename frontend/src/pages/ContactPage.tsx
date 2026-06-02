@@ -9,10 +9,9 @@ export function ContactPage() {
   return (
     <>
       <HeroSection
+        page="contact"
         title="Get in Touch"
         description="We'd love to welcome you to the studio."
-        compact
-        hideHeader
       />
 
       <Section>
@@ -23,7 +22,7 @@ export function ContactPage() {
 
       <Section variant="warm" className="py-0 pb-20">
         <MotionSection>
-          <div className="overflow-hidden rounded-2xl">
+          <div className="overflow-hidden rounded-lg">
             <iframe
               title="Salon location map"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.0!2d-73.998!3d40.724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQzJzI2LjQiTiA3M8KwNTknNTIuOCJX!5e0!3m2!1sen!2sus!4v1"

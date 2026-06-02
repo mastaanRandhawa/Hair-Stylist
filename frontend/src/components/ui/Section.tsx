@@ -20,7 +20,7 @@ export function Section({
     <section
       id={id}
       className={cn(
-        "py-20 md:py-28 [content-visibility:auto] [contain-intrinsic-size:auto_500px]",
+        "py-16 sm:py-20 md:py-28 [content-visibility:auto] [contain-intrinsic-size:auto_500px]",
         variant === "gold" && "bg-gold",
         variant === "warm" && "bg-warm-white",
         variant === "default" && "bg-cream",
@@ -28,7 +28,10 @@ export function Section({
       )}
     >
       <div
-        className={cn("mx-auto max-w-7xl px-6 lg:px-8", containerClassName)}
+        className={cn(
+          "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8",
+          containerClassName,
+        )}
       >
         {children}
       </div>
@@ -52,7 +55,7 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "mb-12 md:mb-16",
+        "mb-10 sm:mb-12 md:mb-16",
         align === "center" && "text-center",
       )}
     >
@@ -68,7 +71,7 @@ export function SectionHeading({
       )}
       <h2
         className={cn(
-          "text-4xl font-medium leading-tight md:text-5xl lg:text-6xl",
+          "text-3xl font-medium leading-tight sm:text-4xl md:text-5xl lg:text-6xl",
           light ? "text-charcoal" : "text-charcoal",
         )}
       >

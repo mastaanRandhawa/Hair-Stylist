@@ -3,6 +3,8 @@ import { cn } from "@/lib/utils";
 
 interface HeroWaveProps {
   className?: string;
+  /** Accent RGB for flowing highlights (default: brand gold #feed81) */
+  accentRgb?: readonly [number, number, number];
 }
 
 /** Lower resolution on smaller screens = fewer pixels per frame */
@@ -16,7 +18,12 @@ function getRenderScale(): number {
 const TARGET_FPS = 30;
 const FRAME_INTERVAL = 1000 / TARGET_FPS;
 
-export const HeroWave = memo(function HeroWave({ className }: HeroWaveProps) {
+const DEFAULT_ACCENT: readonly [number, number, number] = [254, 237, 129];
+
+export const HeroWave = memo(function HeroWave({
+  className,
+  accentRgb = DEFAULT_ACCENT,
+}: HeroWaveProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -87,11 +94,14 @@ export const HeroWave = memo(function HeroWave({ className }: HeroWaveProps) {
       resizeTimer = setTimeout(resizeCanvas, 200);
     };
 
+    const [accentR, accentG, accentB] = accentRgb;
+    const accentTone = `rgb(${Math.round(accentR * 0.22)}, ${Math.round(accentG * 0.2)}, ${Math.round(accentB * 0.12)})`;
+
     const drawStaticBackground = () => {
       const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
       gradient.addColorStop(0, "#0a0a0a");
       gradient.addColorStop(0.45, "#1f1f1f");
-      gradient.addColorStop(0.7, "#3d3a20");
+      gradient.addColorStop(0.7, accentTone);
       gradient.addColorStop(1, "#1a1a1a");
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -153,10 +163,12 @@ export const HeroWave = memo(function HeroWave({ className }: HeroWaveProps) {
             (0.5 + 0.5 * wave) * shimmer +
             0.12 * fastCos(u_x + u_y + time * 0.3);
 
-          // Brand gold #feed81
-          const r = Math.max(0, Math.min(1, 0.04 + goldMix * 0.99)) * intensity;
-          const g = Math.max(0, Math.min(1, 0.04 + goldMix * 0.93)) * intensity;
-          const b = Math.max(0, Math.min(1, 0.03 + goldMix * 0.5)) * intensity;
+          const r =
+            Math.max(0, Math.min(1, 0.04 + goldMix * (accentR / 255))) * intensity;
+          const g =
+            Math.max(0, Math.min(1, 0.04 + goldMix * (accentG / 255))) * intensity;
+          const b =
+            Math.max(0, Math.min(1, 0.03 + goldMix * (accentB / 255))) * intensity;
 
           const index = (y * w + x) << 2;
           data[index] = (r * 255) | 0;
@@ -184,7 +196,7 @@ export const HeroWave = memo(function HeroWave({ className }: HeroWaveProps) {
       clearTimeout(resizeTimer);
       cancelAnimationFrame(animationId);
     };
-  }, []);
+  }, [accentRgb]);
 
   return (
     <div ref={containerRef} className="absolute inset-0">

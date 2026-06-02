@@ -30,8 +30,13 @@
     @apply border-border;
   }
 
+  :root {
+    --navbar-offset: 5.75rem;
+  }
+
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: var(--navbar-offset);
   }
 
   @media (prefers-reduced-motion: reduce) {
