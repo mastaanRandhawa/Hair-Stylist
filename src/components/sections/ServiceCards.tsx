@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { MotionSection } from "@/components/ui/motion-section";
+import { SafeImage } from "@/components/ui/safe-image";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import type { Service } from "@/data/services";
 
@@ -25,7 +26,7 @@ export function ServiceCards({ services, showAllLink }: ServiceCardsProps) {
               className="group overflow-hidden rounded-2xl bg-warm-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
               <div className="aspect-[4/3] overflow-hidden">
-                <img
+                <SafeImage
                   src={service.image}
                   alt={service.title}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"

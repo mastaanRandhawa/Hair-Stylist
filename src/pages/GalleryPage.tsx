@@ -1,6 +1,7 @@
 import { Instagram } from "lucide-react";
 import { HeroSection } from "@/components/hero/HeroSection";
 import { MotionSection } from "@/components/ui/motion-section";
+import { SafeImage } from "@/components/ui/safe-image";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { galleryImages, beforeAfter } from "@/data/gallery";
 import { site } from "@/data/site";
@@ -23,7 +24,7 @@ export function GalleryPage() {
                 key={img.id}
                 className="mb-6 break-inside-avoid overflow-hidden rounded-xl"
               >
-                <img
+                <SafeImage
                   src={img.src}
                   alt={img.alt}
                   className="w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
@@ -55,7 +56,7 @@ export function GalleryPage() {
                     <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                       Before
                     </p>
-                    <img
+                    <SafeImage
                       src={item.before}
                       alt={`${item.label} before`}
                       className="aspect-[3/4] w-full rounded-xl object-cover"
@@ -68,7 +69,7 @@ export function GalleryPage() {
                     <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                       After
                     </p>
-                    <img
+                    <SafeImage
                       src={item.after}
                       alt={`${item.label} after`}
                       className="aspect-[3/4] w-full rounded-xl object-cover"

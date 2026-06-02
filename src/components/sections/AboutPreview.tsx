@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { MotionSection } from "@/components/ui/motion-section";
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { images } from "@/data/images";
+import { SafeImage } from "@/components/ui/safe-image";
 
 export function AboutPreview() {
   return (
@@ -8,8 +10,8 @@ export function AboutPreview() {
       <MotionSection>
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
-            <img
-              src="https://images.unsplash.com/photo-1633681926022-84b23e8cb58d?w=800&q=80"
+            <SafeImage
+              src={images.blowout}
               alt="Salon interior with stylist at work"
               className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
               loading="lazy"

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { HeroWave } from "@/components/ui/dynamic-wave-canvas-background";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -49,7 +50,7 @@ const defaultProps: Partial<HeroLandingProps> = {
   titleSize: "large",
   gradientColors: {
     from: "#D8C86A",
-    to: "#EAE4D6",
+    to: "#1F1F1F",
   },
 };
 
@@ -64,7 +65,6 @@ export function HeroLanding(props: HeroLandingProps) {
     announcementBanner,
     callToActions,
     titleSize,
-    gradientColors,
     backgroundImage,
     hideHeader = false,
     compact = false,
@@ -72,6 +72,7 @@ export function HeroLanding(props: HeroLandingProps) {
   } = { ...defaultProps, ...props };
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const textOnDark = true;
 
   const getTitleSizeClasses = () => {
     switch (titleSize) {
@@ -102,8 +103,12 @@ export function HeroLanding(props: HeroLandingProps) {
       );
     }
 
-    const className =
-      "text-sm font-semibold text-warm-white/90 transition-colors hover:text-warm-white sm:text-base";
+    const className = cn(
+      "text-sm font-semibold transition-colors sm:text-base",
+      textOnDark
+        ? "text-warm-white/90 hover:text-warm-white"
+        : "text-charcoal/80 hover:text-charcoal",
+    );
     return isExternal ? (
       <a key={index} href={cta.href} className={className}>
         {cta.text} <span aria-hidden="true">→</span>
@@ -130,47 +135,30 @@ export function HeroLanding(props: HeroLandingProps) {
     );
   };
 
-  const textOnImage = !!backgroundImage;
-
   return (
     <div
       className={cn(
-        "relative w-full overflow-hidden",
+        "relative w-full overflow-hidden bg-charcoal",
         compact ? "min-h-[50vh]" : "min-h-screen",
         className,
       )}
     >
-      {backgroundImage ? (
-        <>
+      {/* Dynamic wave canvas — black & gold flowing background */}
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+        <HeroWave />
+        {backgroundImage && (
           <img
             src={backgroundImage}
             alt=""
-            className="absolute inset-0 h-full w-full object-cover"
-            fetchPriority="high"
+            className="absolute inset-0 h-full w-full object-cover opacity-15 mix-blend-overlay"
+            loading="lazy"
           />
-          <div className="absolute inset-0 bg-charcoal/50" aria-hidden="true" />
-        </>
-      ) : (
-        <>
-          <div
-            aria-hidden="true"
-            className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-          >
-            <div
-              style={{
-                clipPath:
-                  "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-                background: `linear-gradient(to top right, ${gradientColors?.from}, ${gradientColors?.to})`,
-              }}
-              className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-            />
-          </div>
-          <div className="absolute inset-0 bg-cream" aria-hidden="true" />
-        </>
-      )}
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/20 to-charcoal/50" />
+      </div>
 
       {!hideHeader && (
-        <header className="absolute inset-x-0 top-0 z-20">
+        <header className="absolute inset-x-0 top-0 z-30">
           <nav
             aria-label="Global"
             className="mx-auto flex max-w-7xl items-center justify-between p-4 sm:p-6 lg:px-8"
@@ -178,7 +166,10 @@ export function HeroLanding(props: HeroLandingProps) {
             <div className="flex lg:flex-1">
               <NavLink
                 href="/"
-                className="-m-1.5 p-1.5 font-serif text-xl font-semibold tracking-wide text-warm-white"
+                className={cn(
+                  "-m-1.5 p-1.5 font-serif text-xl font-semibold tracking-wide",
+                  textOnDark ? "text-warm-white" : "text-charcoal",
+                )}
               >
                 {logo?.companyName ?? "Lumière"}
               </NavLink>
@@ -189,7 +180,7 @@ export function HeroLanding(props: HeroLandingProps) {
                 onClick={() => setMobileMenuOpen(true)}
                 className={cn(
                   "-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 transition-colors",
-                  textOnImage
+                  textOnDark
                     ? "text-warm-white hover:text-gold"
                     : "text-charcoal hover:text-charcoal/70",
                 )}
@@ -206,7 +197,7 @@ export function HeroLanding(props: HeroLandingProps) {
                     href={item.href}
                     className={cn(
                       "text-sm font-medium transition-colors",
-                      textOnImage
+                      textOnDark
                         ? "text-warm-white/90 hover:text-gold"
                         : "text-charcoal hover:text-charcoal/70",
                     )}
@@ -270,7 +261,7 @@ export function HeroLanding(props: HeroLandingProps) {
 
       <div
         className={cn(
-          "relative isolate flex flex-col justify-center px-6",
+          "relative z-10 isolate flex flex-col justify-center px-6",
           compact ? "min-h-[50vh] py-24" : "min-h-screen py-32",
         )}
       >
@@ -280,7 +271,7 @@ export function HeroLanding(props: HeroLandingProps) {
               <div
                 className={cn(
                   "relative rounded-full px-4 py-1.5 text-sm ring-1 transition-all",
-                  textOnImage
+                  textOnDark
                     ? "text-warm-white/90 ring-warm-white/30 hover:ring-gold"
                     : "text-muted-foreground ring-border hover:ring-gold",
                 )}
@@ -301,7 +292,7 @@ export function HeroLanding(props: HeroLandingProps) {
               className={cn(
                 getTitleSizeClasses(),
                 "font-serif font-medium leading-[1.05] tracking-tight text-balance",
-                textOnImage ? "text-warm-white" : "text-charcoal",
+                textOnDark ? "text-warm-white" : "text-charcoal",
               )}
             >
               {title}
@@ -309,7 +300,7 @@ export function HeroLanding(props: HeroLandingProps) {
             <p
               className={cn(
                 "mx-auto mt-6 max-w-2xl text-base font-normal leading-relaxed sm:mt-8 sm:text-lg md:text-xl",
-                textOnImage ? "text-warm-white/85" : "text-muted-foreground",
+                textOnDark ? "text-warm-white/85" : "text-muted-foreground",
               )}
             >
               {description}

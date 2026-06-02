@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { MotionSection } from "@/components/ui/motion-section";
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { usePageVisible } from "@/hooks/use-page-visible";
 import type { Testimonial } from "@/data/testimonials";
 
 interface TestimonialsProps {
@@ -10,6 +11,7 @@ interface TestimonialsProps {
 
 export function Testimonials({ items }: TestimonialsProps) {
   const [index, setIndex] = useState(0);
+  const pageVisible = usePageVisible();
 
   const next = useCallback(() => {
     setIndex((i) => (i + 1) % items.length);
@@ -20,9 +22,10 @@ export function Testimonials({ items }: TestimonialsProps) {
   }, [items.length]);
 
   useEffect(() => {
+    if (!pageVisible) return;
     const timer = setInterval(next, 6000);
     return () => clearInterval(timer);
-  }, [next]);
+  }, [next, pageVisible]);
 
   const current = items[index];
 
@@ -37,7 +40,10 @@ export function Testimonials({ items }: TestimonialsProps) {
         <div className="relative mx-auto max-w-3xl">
           <article className="rounded-2xl bg-warm-white px-8 py-12 shadow-sm md:px-16 md:py-16">
             <Quote className="h-10 w-10 text-gold/60" aria-hidden="true" />
-            <blockquote className="mt-6 font-serif text-2xl leading-relaxed text-charcoal md:text-3xl">
+            <blockquote
+              key={current.id}
+              className="mt-6 font-serif text-2xl leading-relaxed text-charcoal transition-opacity duration-300 md:text-3xl"
+            >
               "{current.quote}"
             </blockquote>
             <footer className="mt-8">

@@ -20,7 +20,7 @@ export function Section({
     <section
       id={id}
       className={cn(
-        "py-20 md:py-28",
+        "py-20 md:py-28 [content-visibility:auto] [contain-intrinsic-size:auto_500px]",
         variant === "gold" && "bg-gold",
         variant === "warm" && "bg-warm-white",
         variant === "default" && "bg-cream",

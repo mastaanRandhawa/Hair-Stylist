@@ -1,3 +1,5 @@
+import { images } from "./images";
+
 export interface TeamMember {
   id: string;
   name: string;
@@ -12,24 +14,21 @@ export const team: TeamMember[] = [
     name: "Elena Marchetti",
     role: "Founder & Creative Director",
     bio: "15 years shaping editorial looks for runway and red carpet.",
-    image:
-      "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=600&q=80",
+    image: images.teamElena,
   },
   {
     id: "james",
     name: "James Whitmore",
     role: "Senior Colorist",
     bio: "Specialist in balayage and dimensional color artistry.",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+    image: images.teamJames,
   },
   {
     id: "sophia",
     name: "Sophia Chen",
     role: "Stylist",
     bio: "Known for precision cuts and effortless, lived-in texture.",
-    image:
-      "https://images.unsplash.com/photo-1594744803329-e58b31de8cd5?w=600&q=80",
+    image: images.teamSophia,
   },
 ];
 

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { MotionSection } from "@/components/ui/motion-section";
+import { SafeImage } from "@/components/ui/safe-image";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { galleryImages } from "@/data/gallery";
 
@@ -23,7 +24,7 @@ export function GalleryPreview() {
                 i === 0 ? "col-span-2 row-span-2 aspect-square md:aspect-auto md:min-h-[400px]" : "aspect-square"
               }`}
             >
-              <img
+              <SafeImage
                 src={img.src}
                 alt={img.alt}
                 className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"

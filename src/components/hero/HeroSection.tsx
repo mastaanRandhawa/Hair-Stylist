@@ -1,9 +1,6 @@
 import { HeroLanding } from "@/components/ui/hero-1";
 import { navigation, site } from "@/data/site";
 
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1560066984-138d7174ebb1?w=1920&q=85";
-
 interface HeroSectionProps {
   title?: string;
   description?: string;
@@ -43,8 +40,7 @@ export function HeroSection({
         { text: "View Services", href: "/services", variant: "secondary" },
       ]}
       titleSize="large"
-      backgroundImage={HERO_IMAGE}
-      gradientColors={{ from: "#D8C86A", to: "#EAE4D6" }}
+      gradientColors={{ from: "#D8C86A", to: "#1F1F1F" }}
       hideHeader={hideHeader}
       compact={compact}
     />

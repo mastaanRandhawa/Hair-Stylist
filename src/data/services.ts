@@ -1,3 +1,5 @@
+import { images } from "./images";
+
 export interface Service {
   id: string;
   title: string;
@@ -15,8 +17,7 @@ export const featuredServices: Service[] = [
       "Precision cutting tailored to your face shape, finished with a bespoke blowout.",
     price: "From $120",
     duration: "90 min",
-    image:
-      "https://images.unsplash.com/photo-1560066984-138d7174ebb1?w=800&q=80",
+    image: images.salonInterior,
   },
   {
     id: "balayage",
@@ -25,8 +26,7 @@ export const featuredServices: Service[] = [
       "Sun-kissed dimension with seamless blending for a natural, editorial finish.",
     price: "From $280",
     duration: "3 hrs",
-    image:
-      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80",
+    image: images.hairStyling,
   },
   {
     id: "gloss-treatment",
@@ -35,8 +35,7 @@ export const featuredServices: Service[] = [
       "Mirror-like shine and deep conditioning for revitalized, runway-ready hair.",
     price: "From $95",
     duration: "60 min",
-    image:
-      "https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=800&q=80",
+    image: images.hairGloss,
   },
   {
     id: "bridal",
@@ -45,8 +44,7 @@ export const featuredServices: Service[] = [
       "Trial and day-of styling crafted for timeless, camera-ready elegance.",
     price: "From $350",
     duration: "2 hrs",
-    image:
-      "https://images.unsplash.com/photo-1595476108010-b7d1a02d0f1c?w=800&q=80",
+    image: images.bridalHair,
   },
 ];
 

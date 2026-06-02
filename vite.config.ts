@@ -10,4 +10,19 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return;
+          if (id.includes("react-router")) return "vendor-router";
+          if (id.includes("@radix-ui")) return "vendor-radix";
+          if (id.includes("react-dom") || id.includes("/react/")) return "vendor-react";
+        },
+      },
+    },
+    target: "es2022",
+    cssMinify: true,
+    minify: "esbuild",
+  },
 });

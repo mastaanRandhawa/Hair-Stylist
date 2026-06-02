@@ -8,7 +8,8 @@ A luxury editorial salon website built with React 19, TypeScript, Vite, Tailwind
 - **Tailwind CSS v4** with custom design tokens (cream, gold, charcoal palette)
 - **21st.dev Hero** — integrated from `21stdev.md` at `src/components/ui/hero-1.tsx`
 - **shadcn-style UI** — Dialog, Button, Input, Accordion
-- **Framer Motion** — subtle scroll fade-in animations
+- **CSS scroll reveals** — lightweight fade-in (no heavy animation library)
+- **Optimized hero canvas** — 30fps cap, pauses off-screen, adaptive resolution
 - **React Router** — multi-page routing
 
 ## Getting Started

@@ -1,4 +1,5 @@
 import { MotionSection } from "@/components/ui/motion-section";
+import { SafeImage } from "@/components/ui/safe-image";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import type { TeamMember } from "@/data/team";
 
@@ -20,7 +21,7 @@ export function TeamSection({ members }: TeamSectionProps) {
           {members.map((member) => (
             <article key={member.id} className="group text-center">
               <div className="relative mx-auto aspect-[3/4] max-w-sm overflow-hidden rounded-2xl">
-                <img
+                <SafeImage
                   src={member.image}
                   alt={member.name}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
